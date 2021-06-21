@@ -61,7 +61,7 @@ foreach ($areaBlocks as $areaHandle => $blocks) {
 ?>
 <script>
     $(function () {
-        $('.blink').removeClass('blink');
+        $('.ccm-block-edit.blink').removeClass('blink');
         $('[data-link-block]').on('click', function (e) {
             e.preventDefault();
             var bID = $(this).data('link-block');
