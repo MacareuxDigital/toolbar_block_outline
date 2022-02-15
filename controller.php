@@ -11,7 +11,7 @@ class Controller extends Package
 {
     protected $appVersionRequired = '8.5.5';
     protected $pkgHandle = 'toolbar_block_outline';
-    protected $pkgVersion = '0.0.1';
+    protected $pkgVersion = '0.0.2';
 
     public function getPackageName()
     {
