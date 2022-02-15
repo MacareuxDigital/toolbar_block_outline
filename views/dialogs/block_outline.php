@@ -47,12 +47,6 @@ foreach ($areaBlocks as $areaHandle => $area) {
                                 <?php } else { ?>
                                     <?= h($blockType->getBlockTypeName()) ?>
                                 <?php } ?>
-                                <small>
-                                    bID: <?= $block->getBlockID() ?>
-                                    <?php if ($block->getBlockFilename()) { ?>
-                                        <?= h('Template') ?>: <?= h($block->getBlockFilename()) ?>
-                                    <?php } ?>
-                                </small>
                             </h4>
                             <?php
                             if ($block->getBlockTypeHandle() === 'content') {
@@ -66,10 +60,16 @@ foreach ($areaBlocks as $areaHandle => $area) {
                                 <span class="label label-<?php if ($block->cacheBlockOutput()) { ?>primary<?php } else { ?>default<?php } ?>"><?= h('Cache') ?></span>
                                 <span class="label label-<?php if ($block->cacheBlockOutputOnPost()) { ?>primary<?php } else { ?>default<?php } ?>"><?= h('Cache on Post') ?></span>
                                 <span class="label label-<?php if ($block->cacheBlockOutputForRegisteredUsers()) { ?>primary<?php } else { ?>default<?php } ?>"><?= h('Cache for Registered') ?></span>
-                                <span class="label label-info"><?= $block->getBlockCacheSettingsObject()->getBlockOutputCacheLifetime() ?>ms</span>
                                 <span class="label label-<?php if ($block->isAlias()) { ?>primary<?php } else { ?>default<?php } ?>"><?= h('Alias') ?></span>
                                 <span class="label label-<?php if ($block->isAliasOfMasterCollection()) { ?>primary<?php } else { ?>default<?php } ?>"><?= h('Alias from default') ?></span>
                             </div>
+                            <ul class="list-inline text-muted">
+                                <li><small>bID: <?= $block->getBlockID() ?></small></li>
+                                <?php if ($block->getBlockFilename()) { ?>
+                                    <li><small><?= h('Template') ?>: <?= h($block->getBlockFilename()) ?></small></li>
+                                <?php } ?>
+                                <li><small>Cache Lifetime: <?= $block->getBlockCacheSettingsObject()->getBlockOutputCacheLifetime() ?>s</small></li>
+                            </ul>
                         </div>
                     </li>
                     <?php
