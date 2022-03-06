@@ -12,8 +12,8 @@ $text = $app->make('helper/text');
 foreach ($areaBlocks as $areaHandle => $area) {
     $blocks = $area['blocks'];
     ?>
-    <div class="panel panel-default">
-        <div class="panel-heading">
+    <div class="card mb-2">
+        <div class="card-header">
             <?php
             if (isset($area['link'])) {
                 echo sprintf('<a href="%s" target="_blank">', $area['link']);
@@ -26,21 +26,20 @@ foreach ($areaBlocks as $areaHandle => $area) {
             }
             ?>
         </div>
-        <div class="panel-body">
-            <ul class="media-list">
+        <div class="card-body">
                 <?php
                 /** @var \Concrete\Core\Block\Block $block */
                 foreach ($blocks as $block) {
                     /** @var \Concrete\Core\Entity\Block\BlockType\BlockType $blockType */
                     $blockType = $block->getBlockTypeObject();
                     ?>
-                    <li class="media">
-                        <div class="media-left">
+                    <div class="d-flex">
+                        <div class="flex-shrink-0">
                             <img src="<?= $urls->getBlockTypeIconURL($blockType) ?>" class="media-object"
                                  alt="<?= h($blockType->getBlockTypeName()) ?>" width="24" height="24">
                         </div>
-                        <div class="media-body">
-                            <h4 class="media-heading">
+                        <div class="flex-grow-1 ms-3">
+                            <h4 class="card-title">
                                 <?php if ($isEditMode) { ?>
                                     <a href="#"
                                        data-link-block="<?= h($block->getBlockID()) ?>"><?= h($blockType->getBlockTypeName()) ?></a>
@@ -52,30 +51,29 @@ foreach ($areaBlocks as $areaHandle => $area) {
                             if ($block->getBlockTypeHandle() === 'content') {
                                 $content = $block->getController()->getContent();
                                 ?>
-                                <p><?= h($text->shorten(htmLawed($content))) ?></p>
+                                <p class="card-text"><?= h($text->shorten(htmLawed($content))) ?></p>
                                 <?php
                             }
                             ?>
                             <div>
-                                <span class="label label-<?php if ($block->cacheBlockOutput()) { ?>primary<?php } else { ?>default<?php } ?>"><?= h('Cache') ?></span>
-                                <span class="label label-<?php if ($block->cacheBlockOutputForRegisteredUsers()) { ?>primary<?php } else { ?>default<?php } ?>"><?= h('Cache for Registered') ?></span>
-                                <span class="label label-<?php if ($block->cacheBlockOutputOnPost()) { ?>primary<?php } else { ?>default<?php } ?>"><?= h('Cache on Post') ?></span>
-                                <span class="label label-<?php if ($block->isAlias()) { ?>primary<?php } else { ?>default<?php } ?>"><?= h('Alias') ?></span>
-                                <span class="label label-<?php if ($block->isAliasOfMasterCollection()) { ?>primary<?php } else { ?>default<?php } ?>"><?= h('Alias from default') ?></span>
+                                <span class="badge bg-<?php if ($block->cacheBlockOutput()) { ?>primary<?php } else { ?>secondary<?php } ?>"><?= h('Cache') ?></span>
+                                <span class="badge bg-<?php if ($block->cacheBlockOutputForRegisteredUsers()) { ?>primary<?php } else { ?>secondary<?php } ?>"><?= h('Cache for Registered') ?></span>
+                                <span class="badge bg-<?php if ($block->cacheBlockOutputOnPost()) { ?>primary<?php } else { ?>secondary<?php } ?>"><?= h('Cache on Post') ?></span>
+                                <span class="badge bg-<?php if ($block->isAlias()) { ?>primary<?php } else { ?>secondary<?php } ?>"><?= h('Alias') ?></span>
+                                <span class="badge bg-<?php if ($block->isAliasOfMasterCollection()) { ?>primary<?php } else { ?>secondary<?php } ?>"><?= h('Alias from default') ?></span>
                             </div>
                             <ul class="list-inline text-muted">
-                                <li><small>bID: <?= $block->getBlockID() ?></small></li>
+                                <li class="list-inline-item"><small>bID: <?= $block->getBlockID() ?></small></li>
                                 <?php if ($block->getBlockFilename()) { ?>
-                                    <li><small><?= h('Template') ?>: <?= h($block->getBlockFilename()) ?></small></li>
+                                    <li class="list-inline-item"><small><?= h('Template') ?>: <?= h($block->getBlockFilename()) ?></small></li>
                                 <?php } ?>
-                                <li><small>Cache Lifetime: <?= $block->getBlockCacheSettingsObject()->getBlockOutputCacheLifetime() ?>s</small></li>
+                                <li class="list-inline-item"><small>Cache Lifetime: <?= $block->getBlockCacheSettingsObject()->getBlockOutputCacheLifetime() ?>s</small></li>
                             </ul>
                         </div>
-                    </li>
+                    </div>
                     <?php
                 }
                 ?>
-            </ul>
         </div>
     </div>
     <?php
