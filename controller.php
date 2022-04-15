@@ -20,7 +20,7 @@ class Controller extends Package
 
     public function getPackageDescription()
     {
-        return t('Add a button to show outline of blocks in the current page on the toolbar.');
+        return t('Add a button to show an outline of blocks on the current page on the toolbar.');
     }
 
     public function on_start()
