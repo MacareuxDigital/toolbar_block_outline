@@ -11,7 +11,7 @@ class Controller extends Package
 {
     protected $appVersionRequired = '8.5.5';
     protected $pkgHandle = 'toolbar_block_outline';
-    protected $pkgVersion = '0.0.2';
+    protected $pkgVersion = '0.9';
 
     public function getPackageName()
     {
@@ -20,7 +20,7 @@ class Controller extends Package
 
     public function getPackageDescription()
     {
-        return t('Add a button to show outline of blocks in toolbar.');
+        return t('Add a button to show outline of blocks in the current page on the toolbar.');
     }
 
     public function on_start()
