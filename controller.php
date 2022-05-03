@@ -44,7 +44,8 @@ class Controller extends Package
                 'dialog-title' => t('Outline'),
                 'data-toggle' => 'tooltip',
                 'data-placement' => 'bottom',
-                'data-original-title' => t('Outline'),
+                'data-original-title' => t('View Outline of blocks on this page.'),
+                'data-bs-original-title' => t('View Outline of blocks on this page.'),
             ],
         ]);
     }
