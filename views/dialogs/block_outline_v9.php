@@ -24,64 +24,65 @@ foreach ($areaBlocks as $areaHandle => $area) {
             <?= h($areaHandle) ?>
             <?php
             if (isset($area['link'])) {
-                echo '</a>';
+                echo ' <i class="fas fa-edit"></i></a>';
             }
             ?>
         </div>
         <div class="card-body">
-                <?php
-                /** @var \Concrete\Core\Block\Block $block */
-                foreach ($blocks as $block) {
-                    /** @var \Concrete\Core\Entity\Block\BlockType\BlockType $blockType */
-                    $blockType = $block->getBlockTypeObject();
-                    $cacheLifetime = (int) $block->getBlockCacheSettingsObject()->getBlockOutputCacheLifetime();
-                    if ($cacheLifetime === 0) {
-                        $cacheLifetime = t('Until manually cleared');
-                    } else {
-                        $cacheLifetime = $date->describeInterval($cacheLifetime);
-                    }
-                    ?>
-                    <div class="d-flex">
-                        <div class="flex-shrink-0">
-                            <img src="<?= $urls->getBlockTypeIconURL($blockType) ?>" class="media-object"
-                                 alt="<?= h($blockType->getBlockTypeName()) ?>" width="24" height="24">
-                        </div>
-                        <div class="flex-grow-1 ms-3">
-                            <h4 class="card-title">
-                                <?php if ($isEditMode) { ?>
-                                    <a href="#"
-                                       data-link-block="<?= h($block->getBlockID()) ?>"><?= h($blockType->getBlockTypeName()) ?></a>
-                                <?php } else { ?>
-                                    <?= h($blockType->getBlockTypeName()) ?>
-                                <?php } ?>
-                            </h4>
-                            <?php
-                            if ($block->getBlockTypeHandle() === 'content') {
-                                $content = $block->getController()->getContent();
-                                ?>
-                                <p class="card-text"><?= h($text->shorten(htmLawed($content))) ?></p>
-                                <?php
-                            }
-                            ?>
-                            <div>
-                                <span class="badge bg-<?php if ($block->cacheBlockOutput()) { ?>primary<?php } else { ?>secondary<?php } ?>"><?= h('Cache') ?></span>
-                                <span class="badge bg-<?php if ($block->cacheBlockOutputForRegisteredUsers()) { ?>primary<?php } else { ?>secondary<?php } ?>"><?= h('Cache for Registered') ?></span>
-                                <span class="badge bg-<?php if ($block->cacheBlockOutputOnPost()) { ?>primary<?php } else { ?>secondary<?php } ?>"><?= h('Cache on Post') ?></span>
-                                <span class="badge bg-<?php if ($block->isAlias()) { ?>primary<?php } else { ?>secondary<?php } ?>"><?= h('Alias') ?></span>
-                                <span class="badge bg-<?php if ($block->isAliasOfMasterCollection()) { ?>primary<?php } else { ?>secondary<?php } ?>"><?= h('Alias from default') ?></span>
-                            </div>
-                            <ul class="list-inline text-muted">
-                                <li class="list-inline-item"><small>bID: <?= $block->getBlockID() ?></small></li>
-                                <?php if ($block->getBlockFilename()) { ?>
-                                    <li class="list-inline-item"><small><?= h('Template') ?>: <?= h($block->getBlockFilename()) ?></small></li>
-                                <?php } ?>
-                                <li><small>Cache Lifetime: <?= h($cacheLifetime) ?></small></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <?php
+            <?php
+            /** @var \Concrete\Core\Block\Block $block */
+            foreach ($blocks as $block) {
+                /** @var \Concrete\Core\Entity\Block\BlockType\BlockType $blockType */
+                $blockType = $block->getBlockTypeObject();
+                $cacheLifetime = (int)$block->getBlockCacheSettingsObject()->getBlockOutputCacheLifetime();
+                if ($cacheLifetime === 0) {
+                    $cacheLifetime = t('Until manually cleared');
+                } else {
+                    $cacheLifetime = $date->describeInterval($cacheLifetime);
                 }
                 ?>
+                <div class="d-flex">
+                    <div class="flex-shrink-0">
+                        <img src="<?= $urls->getBlockTypeIconURL($blockType) ?>" class="media-object"
+                             alt="<?= h($blockType->getBlockTypeName()) ?>" width="24" height="24">
+                    </div>
+                    <div class="flex-grow-1 ms-3">
+                        <h4 class="card-title">
+                            <?php if ($isEditMode) { ?>
+                                <a href="#"
+                                   data-link-block="<?= h($block->getBlockID()) ?>"><?= h($blockType->getBlockTypeName()) ?></a>
+                            <?php } else { ?>
+                                <?= h($blockType->getBlockTypeName()) ?>
+                            <?php } ?>
+                        </h4>
+                        <?php
+                        if ($block->getBlockTypeHandle() === 'content') {
+                            $content = $block->getController()->getContent();
+                            ?>
+                            <p class="card-text"><?= h($text->shorten(htmLawed($content))) ?></p>
+                            <?php
+                        }
+                        ?>
+                        <div>
+                            <span class="badge bg-<?php if ($block->cacheBlockOutput()) { ?>primary<?php } else { ?>secondary<?php } ?>"><?= h('Cache') ?></span>
+                            <span class="badge bg-<?php if ($block->cacheBlockOutputForRegisteredUsers()) { ?>primary<?php } else { ?>secondary<?php } ?>"><?= h('Cache for Registered') ?></span>
+                            <span class="badge bg-<?php if ($block->cacheBlockOutputOnPost()) { ?>primary<?php } else { ?>secondary<?php } ?>"><?= h('Cache on Post') ?></span>
+                            <span class="badge bg-<?php if ($block->isAlias()) { ?>primary<?php } else { ?>secondary<?php } ?>"><?= h('Alias') ?></span>
+                            <span class="badge bg-<?php if ($block->isAliasOfMasterCollection()) { ?>primary<?php } else { ?>secondary<?php } ?>"><?= h('Alias from default') ?></span>
+                        </div>
+                        <ul class="list-inline text-muted">
+                            <li class="list-inline-item"><small>bID: <?= $block->getBlockID() ?></small></li>
+                            <?php if ($block->getBlockFilename()) { ?>
+                                <li class="list-inline-item"><small><?= h('Template') ?>
+                                        : <?= h($block->getBlockFilename()) ?></small></li>
+                            <?php } ?>
+                            <li><small>Cache Lifetime: <?= h($cacheLifetime) ?></small></li>
+                        </ul>
+                    </div>
+                </div>
+                <?php
+            }
+            ?>
         </div>
     </div>
     <?php

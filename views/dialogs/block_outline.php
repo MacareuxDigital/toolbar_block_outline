@@ -24,7 +24,7 @@ foreach ($areaBlocks as $areaHandle => $area) {
             <?= h($areaHandle) ?>
             <?php
             if (isset($area['link'])) {
-                echo '</a>';
+                echo ' <i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>';
             }
             ?>
         </div>
@@ -35,7 +35,7 @@ foreach ($areaBlocks as $areaHandle => $area) {
                 foreach ($blocks as $block) {
                     /** @var \Concrete\Core\Entity\Block\BlockType\BlockType $blockType */
                     $blockType = $block->getBlockTypeObject();
-                    $cacheLifetime = (int) $block->getBlockCacheSettingsObject()->getBlockOutputCacheLifetime();
+                    $cacheLifetime = (int)$block->getBlockCacheSettingsObject()->getBlockOutputCacheLifetime();
                     if ($cacheLifetime === 0) {
                         $cacheLifetime = t('Until manually cleared');
                     } else {
