@@ -11,7 +11,7 @@ class Controller extends Package
 {
     protected $appVersionRequired = '8.5.5';
     protected $pkgHandle = 'toolbar_block_outline';
-    protected $pkgVersion = '0.9.1';
+    protected $pkgVersion = '0.9.2';
 
     public function getPackageName()
     {
@@ -39,8 +39,8 @@ class Controller extends Package
             'position' => 'left',
             'linkAttributes' => [
                 'class' => 'dialog-launch launch-tooltip',
-                'dialog-width' => 640,
-                'dialog-height' => 640,
+                'dialog-width' => 680,
+                'dialog-height' => 600,
                 'dialog-title' => t('Outline'),
                 'data-toggle' => 'tooltip',
                 'data-placement' => 'bottom',

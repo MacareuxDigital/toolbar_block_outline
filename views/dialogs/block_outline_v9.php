@@ -38,7 +38,7 @@ foreach ($areaBlocks as $areaHandle => $area) {
                 if ($cacheLifetime === 0) {
                     $cacheLifetime = t('Until manually cleared');
                 } else {
-                    $cacheLifetime = $date->describeInterval($cacheLifetime);
+                    $cacheLifetime = $date->describeInterval($cacheLifetime, true);
                 }
                 ?>
                 <div class="d-flex">
@@ -64,20 +64,33 @@ foreach ($areaBlocks as $areaHandle => $area) {
                         }
                         ?>
                         <div>
-                            <span class="badge bg-<?php if ($block->cacheBlockOutput()) { ?>primary<?php } else { ?>secondary<?php } ?>"><?= h('Cache') ?></span>
-                            <span class="badge bg-<?php if ($block->cacheBlockOutputForRegisteredUsers()) { ?>primary<?php } else { ?>secondary<?php } ?>"><?= h('Cache for Registered') ?></span>
-                            <span class="badge bg-<?php if ($block->cacheBlockOutputOnPost()) { ?>primary<?php } else { ?>secondary<?php } ?>"><?= h('Cache on Post') ?></span>
-                            <span class="badge bg-<?php if ($block->isAlias()) { ?>primary<?php } else { ?>secondary<?php } ?>"><?= h('Alias') ?></span>
-                            <span class="badge bg-<?php if ($block->isAliasOfMasterCollection()) { ?>primary<?php } else { ?>secondary<?php } ?>"><?= h('Alias from default') ?></span>
+                            <span class="badge py-1 px-2 bg-<?php if ($block->cacheBlockOutput()) { ?>primary<?php } else { ?>secondary<?php } ?>"><?= h('Cache') ?></span>
+                            <span class="badge py-1 px-2 bg-<?php if ($block->cacheBlockOutputForRegisteredUsers()) { ?>primary<?php } else { ?>secondary<?php } ?>"><?= h('Cache for Registered') ?></span>
+                            <span class="badge py-1 px-2 bg-<?php if ($block->cacheBlockOutputOnPost()) { ?>primary<?php } else { ?>secondary<?php } ?>"><?= h('Cache on Post') ?></span>
+                            <span class="badge py-1 px-2 bg-<?php if ($block->isAlias()) { ?>primary<?php } else { ?>secondary<?php } ?>"><?= h('Alias') ?></span>
+                            <span class="badge py-1 px-2 bg-<?php if ($block->isAliasOfMasterCollection()) { ?>primary<?php } else { ?>secondary<?php } ?>"><?= h('Alias from default') ?></span>
+                            <span class="badge py-1 px-2 bg-<?php if ($block->getCustomStyle()) { ?>primary<?php } else { ?>secondary<?php } ?>"><?= h('Has custom style') ?></span>
                         </div>
-                        <ul class="list-inline text-muted">
-                            <li class="list-inline-item"><small>bID: <?= $block->getBlockID() ?></small></li>
-                            <?php if ($block->getBlockFilename()) { ?>
-                                <li class="list-inline-item"><small><?= h('Template') ?>
-                                        : <?= h($block->getBlockFilename()) ?></small></li>
+                        <dl class="row my-3 fs-6 lh-1">
+                            <dt class="col-sm-3"><?= t('Block ID') ?></dt>
+                            <dd class="col-sm-9"><?= $block->getBlockID() ?></dd>
+                            <dt class="col-sm-3"><?= t('Date Added') ?></dt>
+                            <dd class="col-sm-9"><?= $date->formatPrettyDateTime($block->getBlockDateAdded()) ?></dd>
+                            <?php if ($block->getBlockDateAdded() !== $block->getBlockDateLastModified()) { ?>
+                                <dt class="col-sm-3"><?= t('Date Modified') ?></dt>
+                                <dd class="col-sm-9"><?= $date->formatPrettyDateTime($block->getBlockDateLastModified()) ?></dd>
                             <?php } ?>
-                            <li><small>Cache Lifetime: <?= h($cacheLifetime) ?></small></li>
-                        </ul>
+                            <dt class="col-sm-3"><?= t('Cache Lifetime') ?></dt>
+                            <dd class="col-sm-9"><?= h($cacheLifetime) ?></dd>
+                            <?php if ($block->getBlockFilename()) { ?>
+                                <dt class="col-sm-3"><?= h('Template') ?></dt>
+                                <dd class="col-sm-9"><?= h($block->getBlockFilename()) ?></dd>
+                            <?php } ?>
+                            <?php if ($block->getBlockName()) { ?>
+                                <dt class="col-sm-3"><?= h('Block Name') ?></dt>
+                                <dd class="col-sm-9"><?= h($block->getBlockName()) ?></dd>
+                            <?php } ?>
+                        </dl>
                     </div>
                 </div>
                 <?php

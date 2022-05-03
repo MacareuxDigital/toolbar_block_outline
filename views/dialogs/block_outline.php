@@ -39,7 +39,7 @@ foreach ($areaBlocks as $areaHandle => $area) {
                     if ($cacheLifetime === 0) {
                         $cacheLifetime = t('Until manually cleared');
                     } else {
-                        $cacheLifetime = $date->describeInterval($cacheLifetime);
+                        $cacheLifetime = $date->describeInterval($cacheLifetime, true);
                     }
                     ?>
                     <li class="media">
@@ -70,14 +70,28 @@ foreach ($areaBlocks as $areaHandle => $area) {
                                 <span class="label label-<?php if ($block->cacheBlockOutputOnPost()) { ?>primary<?php } else { ?>default<?php } ?>"><?= h('Cache on Post') ?></span>
                                 <span class="label label-<?php if ($block->isAlias()) { ?>primary<?php } else { ?>default<?php } ?>"><?= h('Alias') ?></span>
                                 <span class="label label-<?php if ($block->isAliasOfMasterCollection()) { ?>primary<?php } else { ?>default<?php } ?>"><?= h('Alias from default') ?></span>
+                                <span class="label label-<?php if ($block->getCustomStyle()) { ?>primary<?php } else { ?>default<?php } ?>"><?= h('Has custom style') ?></span>
                             </div>
-                            <ul class="list-inline text-muted">
-                                <li><small>bID: <?= $block->getBlockID() ?></small></li>
-                                <?php if ($block->getBlockFilename()) { ?>
-                                    <li><small><?= h('Template') ?>: <?= h($block->getBlockFilename()) ?></small></li>
+                            <dl class="dl-horizontal">
+                                <dt><?= t('Block ID') ?></dt>
+                                <dd><?= $block->getBlockID() ?></dd>
+                                <dt><?= t('Date Added') ?></dt>
+                                <dd><?= $date->formatPrettyDateTime($block->getBlockDateAdded()) ?></dd>
+                                <?php if ($block->getBlockDateAdded() !== $block->getBlockDateLastModified()) { ?>
+                                    <dt><?= t('Date Modified') ?></dt>
+                                    <dd><?= $date->formatPrettyDateTime($block->getBlockDateLastModified()) ?></dd>
                                 <?php } ?>
-                                <li><small>Cache Lifetime: <?= h($cacheLifetime) ?></small></li>
-                            </ul>
+                                <dt><?= t('Cache Lifetime') ?></dt>
+                                <dd><?= h($cacheLifetime) ?></dd>
+                                <?php if ($block->getBlockFilename()) { ?>
+                                    <dt><?= h('Template') ?></dt>
+                                    <dd><?= h($block->getBlockFilename()) ?></dd>
+                                <?php } ?>
+                                <?php if ($block->getBlockName()) { ?>
+                                    <dt><?= h('Block Name') ?></dt>
+                                    <dd><?= h($block->getBlockName()) ?></dd>
+                                <?php } ?>
+                            </dl>
                         </div>
                     </li>
                     <?php
