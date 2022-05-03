@@ -8,6 +8,8 @@ $app = \Concrete\Core\Support\Facade\Application::getFacadeApplication();
 $urls = $app->make('helper/concrete/urls');
 /** @var \Concrete\Core\Utility\Service\Text $text */
 $text = $app->make('helper/text');
+/** @var \Concrete\Core\Localization\Service\Date $date */
+$date = $app->make('helper/date');
 
 foreach ($areaBlocks as $areaHandle => $area) {
     $blocks = $area['blocks'];
@@ -32,6 +34,12 @@ foreach ($areaBlocks as $areaHandle => $area) {
                 foreach ($blocks as $block) {
                     /** @var \Concrete\Core\Entity\Block\BlockType\BlockType $blockType */
                     $blockType = $block->getBlockTypeObject();
+                    $cacheLifetime = (int) $block->getBlockCacheSettingsObject()->getBlockOutputCacheLifetime();
+                    if ($cacheLifetime === 0) {
+                        $cacheLifetime = t('Until manually cleared');
+                    } else {
+                        $cacheLifetime = $date->describeInterval($cacheLifetime);
+                    }
                     ?>
                     <div class="d-flex">
                         <div class="flex-shrink-0">
@@ -67,7 +75,7 @@ foreach ($areaBlocks as $areaHandle => $area) {
                                 <?php if ($block->getBlockFilename()) { ?>
                                     <li class="list-inline-item"><small><?= h('Template') ?>: <?= h($block->getBlockFilename()) ?></small></li>
                                 <?php } ?>
-                                <li class="list-inline-item"><small>Cache Lifetime: <?= $block->getBlockCacheSettingsObject()->getBlockOutputCacheLifetime() ?>s</small></li>
+                                <li><small>Cache Lifetime: <?= h($cacheLifetime) ?></small></li>
                             </ul>
                         </div>
                     </div>
